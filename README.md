@@ -85,3 +85,13 @@ To cite this repository in publications:
       journal = {GitHub repository},
       howpublished = {\url{https://github.com/openai/baselines}},
     }
+
+## Setting up Anaconda Environment
+Do this before you install gym or baselines
+
+From the Anaconda website, get the command line installer for python 3.6+. Install it, and then do
+- conda update conda
+- conda update pip
+- conda create -n AI3 python=3.6.5
+- this should install a bunch of stuff for awhile
+- 
