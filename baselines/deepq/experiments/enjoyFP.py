@@ -2,9 +2,19 @@ import gym
 import signal
 import sys
 import os
-from numpy import arccos
+import numpy as np
 
 from baselines import deepq
+
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-fn", "--filename", type=str, default = "FPcav_model.pkl",
+                    help="Deep Q Learning model file")
+args = parser.parse_args()
+
+
 
 ####  this catches the Ctrl-C
 def signal_handler(signal, frame):
@@ -17,7 +27,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 def main():
     env    = gym.make("simplePendulum-v1")
-    funame = "FPcav_model.pkl"
+    funame = args.filename
     act    = deepq.load(funame)
     otim   = os.stat(funame).st_mtime
 
@@ -37,7 +47,9 @@ def main():
             episode_rew += rew
             nsteps += 1
         print("Episode reward = ", round(episode_rew,2))
-        print("Angle = {0:2.2f}, Vel = {1:2.2f}".format(arccos(obs[0]), obs[2]))
+        #print("Angle = {0:2.2f} deg, Vel = {1:2.2f} deg/s, Torque = {2:2.2f} N/m".format(180/np.pi*(obs[0]), 180/np.pi*obs[1], obs[2]))
+        print("Angle = {0:2.2f} deg, Vel = {1:2.2f} deg/s".format(
+            180/np.pi*np.arccos(obs[0]), 180/np.pi*obs[2]))
         print("  ")
 
 
