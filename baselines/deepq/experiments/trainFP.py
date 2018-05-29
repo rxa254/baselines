@@ -39,7 +39,7 @@ def callback(lcl, _glb):
 def main():
     funame = "FPcav_model.pkl"
     env    = gym.make("simplePendulum-v1")
-    model  = deepq.models.mlp([64, 64])
+    model  = deepq.models.mlp([64,64])
     act    = deepq.learn(
         env,
         q_func                = model,
@@ -49,7 +49,6 @@ def main():
         exploration_fraction  = 0.5,
         exploration_final_eps = 0.02,
         print_freq            = 100,
-        funame                = funame,
         callback              = callback
     )
     print("Saving model to " + funame)
