@@ -100,6 +100,7 @@ def learn(env,
           prioritized_replay_beta_iters=None,
           prioritized_replay_eps=1e-6,
           param_noise=False,
+          funame = "model.pkl",
           callback=None):
     """Train a deepq model.
 
@@ -178,13 +179,13 @@ def learn(env,
         return ObservationInput(env.observation_space, name=name)
 
     act, train, update_target, debug = deepq.build_train(
-        make_obs_ph=make_obs_ph,
-        q_func=q_func,
-        num_actions=env.action_space.n,
-        optimizer=tf.train.AdamOptimizer(learning_rate=lr),
-        gamma=gamma,
-        grad_norm_clipping=10,
-        param_noise=param_noise
+        make_obs_ph = make_obs_ph,
+        q_func      = q_func,
+        num_actions = env.action_space.n,
+        optimizer   = tf.train.AdamOptimizer(learning_rate=lr),
+        gamma       = gamma,
+        grad_norm_clipping = 10,
+        param_noise = param_noise
     )
 
     act_params = {
@@ -293,8 +294,7 @@ def learn(env,
                     num_episodes > 100 and t % checkpoint_freq == 0):
                 if saved_mean_reward is None or mean_100ep_reward > saved_mean_reward:
                     if print_freq is not None:
-                        logger.log("Saving model due to mean reward increase: {} -> {}".format(
-                                   saved_mean_reward, mean_100ep_reward))
+                        logger.log("Saving model due to mean reward increase: {} -> {}".format(saved_mean_reward, mean_100ep_reward))
                     save_state(model_file)
                     model_saved = True
                     saved_mean_reward = mean_100ep_reward
